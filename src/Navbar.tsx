@@ -6,7 +6,7 @@ export const Navbar: React.FC = () => {
             <ul className="flex justify-between w-1/5">
                 <li> <Link to={"/"} className="text-xl opacity-60 font-semibold hover:opacity-100">HOME</Link> </li>
                 <li> <Link to={"/*"} className="text-xl opacity-60 font-semibold hover:opacity-100">ARCHIVE</Link> </li>
-                <li> <Link to={"/*"} className="text-xl opacity-60 font-semibold hover:opacity-100">ABOUT</Link> </li>
+                <li> <Link to={"/about"} className="text-xl opacity-60 font-semibold hover:opacity-100">ABOUT</Link> </li>
             </ul>
         </nav>
     )
