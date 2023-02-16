@@ -41,10 +41,7 @@ export const CanvasCarousel: React.FC = () => {
     if (loaded) {
         return (
             <div id="carousel" className="h-full flex flex-col justify-center">
-                <SingleCanvas page={allPages[selectedPageNum]} />
-                <div id="carousel-nav-container" className="mt-4">
-                    <PdfPageNav {...PdfPageNavProps} />
-                </div>
+                <SingleCanvas page={allPages[selectedPageNum]} literalPageNavProps={PdfPageNavProps} />
             </div>
         )
     } else {
