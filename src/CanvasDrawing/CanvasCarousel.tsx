@@ -3,34 +3,30 @@ import { SingleCanvas } from "./SingleCanvas"
 
 import { Point, Box, Page } from "./CanvasInterfaces"
 import { PdfPageNav, PdfPageNavProps } from "./PdfPageNav"
+import { useLocation } from "react-router-dom"
 
 export const CanvasCarousel: React.FC = () => {
-    const [loaded, setLoaded] = useState(false)
+    const BUCKET_BASE_URL = import.meta.env.VITE_BUCKET_BASE_URL
+
+    const [loaded, setLoaded] = useState(true)
     const [selectedPageNum, setSelectedPageNum] = useState(0)
 
-    // set all pages, fake call to api to get images.
-    const [allPages, setAllPages] = useState<Page[]>([])
-    useEffect(() => {
-        const p0: Page = {
-            pageNum: 0,
-            imageURL: 'https://holdmy-pdf-plz.s3.amazonaws.com/images/0.jpg',
-            boxes: []
-        }
-        const p1: Page = {
-            pageNum: 1,
-            imageURL: 'https://holdmy-pdf-plz.s3.amazonaws.com/images/1.jpg',
-            boxes: []
-        }
-        const p2: Page = {
-            pageNum: 2,
-            imageURL: 'https://holdmy-pdf-plz.s3.amazonaws.com/images/2.jpg',
-            boxes: []
-        }
+    // CONSTRUCT allPAGES
+    // using navigate from react rotuer requires that i pass props to the location. so i extract the image urls from location.state
+    const location = useLocation()
+    const { imageURLS } = location.state
 
-        setAllPages([p0, p1, p2])
-        setLoaded(true)
-    }, [])
+    // build pages array by constructing a page element for each image url
+    const builtPages = imageURLS.map( (url: string, index: number) => {
+        const page: Page = {
+            pageNum: index,
+            imageURL: `${BUCKET_BASE_URL}${url}`,
+            boxes: []
+        }
+        return page
+    })
 
+    const [allPages, setAllPages] = useState<Page[]>(builtPages)
 
     const PdfPageNavProps: PdfPageNavProps = {
         selectedPageNum: selectedPageNum,
